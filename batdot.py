@@ -3,7 +3,7 @@ import socket
 import ssl
 
 arg = "cat.gif"
-argv = "192.168.0.102/someIDstuffhere"
+argv = "192.168.0.102/"
 
 s = socket.socket()
 s.settimeout(60)
@@ -12,6 +12,7 @@ ws.connect(('192.168.0.101', 6697))
 ws.send(b"USER BATDOT BATDOT BATDOT: bot for DAT commands\n\r")
 ws.send(b"NICK BATDOT\n\r")
 ws.send(b"JOIN #bots\n\r")
+
 ws.send(b"download "+str.encode(arg))
 
 while True:
