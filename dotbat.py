@@ -31,7 +31,7 @@ while True:
 	print(msg.decode('utf-8'))
 	if b"PING" in msg:
 		ws.send(b"PONG\n\r")
-	if b'ID' in msg:
+	if b'ID options' in msg:
 
 	if b'download' in msg:
 		file = (((msg.decode('utf-8')).split("download"))[1].split('\''))[1]

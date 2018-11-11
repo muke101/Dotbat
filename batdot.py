@@ -12,7 +12,13 @@ ws.connect(('192.168.0.101', 6697))
 ws.send(b"USER BATDOT BATDOT BATDOT: bot for DAT commands\n\r")
 ws.send(b"NICK BATDOT\n\r")
 ws.send(b"JOIN #bots\n\r")
-
+ws.send(b'ID options')
+msg = ws.recv(8291)
+options = (msg.decode('utf-8')).split(',')
+IDs = {c:i for c, i in enumerate(options)}
+print(IDs)
+choice = input("select ID")
+ID = IDs[choice]
 ws.send(b"download "+str.encode(arg))
 
 while True:
@@ -24,7 +30,7 @@ while True:
 		ws.send(b"PONG\n\r")
 	if b"Directory" in msg:
 		directory = (((msg.decode('utf-8')).split('Directory'))[1].split('\''))[1]
-		download = urlib.request.urlretrieve(argv+directory)
+		download = urlib.request.urlretrieve(argv+ID+directory)
 		file = open(arg, 'wb')
 		meta = download.info()
 		size = int(meta.getheaders("Content-Length")[0])
