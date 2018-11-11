@@ -44,6 +44,7 @@ while True:
 			with open('names.csv', 'r') as IDs:
 				reader = csv.reader(IDs, delimiter=',')
 				for row in reader:
+					print(row)
 					ws.send(str.encode(row)+b',')
 
 		if b'download' in msg:

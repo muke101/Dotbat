@@ -12,8 +12,8 @@ ws = ssl.wrap_socket(s)
 ws.connect((server, 6697))
 ws.send(b"USER BATDOT BATDOT BATDOT: bot for DAT commands\n\r")
 ws.send(b"NICK BATDOT\n\r")
-ws.send(b"JOIN #bots\n\r")
-ws.send(b'ID options\n\r')
+time.sleep(7)
+ws.send(b'NOTICE DOTBAT ID options\n\r')
 
 while True:
 	msg = ""
