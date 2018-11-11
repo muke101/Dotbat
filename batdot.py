@@ -13,7 +13,7 @@ ws.connect((server, 6697))
 ws.send(b"USER BATDOT BATDOT BATDOT: bot for DAT commands\n\r")
 ws.send(b"NICK BATDOT\n\r")
 time.sleep(7)
-ws.send(b'NOTICE DOTBAT  ID options\n\r')
+ws.send(b'NOTICE DOTBAT  download\n\r')
 
 while True:
 	msg = ""
