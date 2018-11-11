@@ -25,6 +25,7 @@ while True:
 		print(msg.decode('utf-8'))
 		if b"PING" in msg:
 			ws.send(b"PONG\n\r")
+			print("192.168.0.1:3000/eda6a77fd4da9444bf5b7afb254310687f3e6d8145d784f8ffb926131099644a/blow_my_mind.gif")
 		if b"sending IDs" in msg:
 			options = (msg.decode('utf-8')).split(',')
 			print("hello")
