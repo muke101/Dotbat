@@ -2,6 +2,7 @@ import urllib.request
 import socket
 import ssl
 import sys
+import time
 
 file = sys.argv[1]
 server = str(sys.argv[2])
@@ -13,7 +14,7 @@ ws.send(b"USER BATDOT BATDOT BATDOT: bot for DAT commands\n\r")
 ws.send(b"NICK BATDOT\n\r")
 ws.send(b"JOIN #bots\n\r")
 ws.send(b'ID options')
-while  ws.recv
+time.sleep(5)
 msg = ws.recv(8291)
 options = (msg.decode('utf-8')).split(',')
 IDs = {c:i for c, i in enumerate(options)}

@@ -34,8 +34,6 @@ while True:
 	msg = ''
 	try:
 		msg = ws.recv(8291)
-	except socket.timeout:
-		pass
 	msg = msg.strip(b'\n\r')
 	print(msg.decode('utf-8'))
 	if b"PING" in msg:
@@ -51,4 +49,6 @@ while True:
 		file = (((msg.decode('utf-8')).split("download"))[1].split('\''))[1]
 		directory = ''.join([i for i in str(os.system('find . -name' + '\'' + file + '\'')).split('0')[0]][2:])
 		ws.send(b'Directory \''+str.encode(directory)+b'\'')
+	except socket.timeout:
+		pass
 
