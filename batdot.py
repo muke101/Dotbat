@@ -16,40 +16,40 @@ time.sleep(7)
 ws.send(b'NOTICE DOTBAT  download cat.gif\n\r')
 
 while True:
-	msg = ""
 	try:
+		msg = ""
 		msg = ws.recv(8291)
+		msg = msg.strip(b'\n\r')
+		print(msg.decode('utf-8'))
+		if b"PING" in msg:
+			ws.send(b"PONG\n\r")
+		if b"sending IDs" in msg:
+			options = (msg.decode('utf-8')).split(',')
+			print("hello")
+			IDs = {c:i for c, i in enumerate(options)}
+			print(IDs)
+			choice = input("select ID")
+			ID = IDs[choice]
+			ws.send(b"download "+str.encode(file))
+		if b"Directory" in msg:
+			directory = (((msg.decode('utf-8')).split('Directory'))[1].split('\''))[1]
+			download = urlib.request.urlretrieve(file+ID+directory)
+			downloadfile = open(file, 'wb')
+			meta = download.info() 
+			size = int(meta.getheaders("Content-Length")[0])
+			print("Downloading: %s Bytes: %s" % (file, size))
+			size_dl = 0
+			block_sz = 8192 
+			while True:
+				buffer = download.read(block_sz)
+				if not buffer:
+					break 
+				size_dl+= len(buffer)
+				downloadfile.write(buffer)
+				status = r"%10d  [%3.2f%%]" % (size_dl, size_dl * 100. / size)
+				status = status + chr(8)*(len(status)+1)
+				print(status)
+			downloadfile.close()
 	except socket.timeout:
 		pass
-	msg = msg.strip(b'\n\r')
-	print(msg.decode('utf-8'))
-	if b"PING" in msg:
-		ws.send(b"PONG\n\r")
-	if b"sending IDs" in msg:
-		options = (msg.decode('utf-8')).split(',')
-		print("hello")
-		IDs = {c:i for c, i in enumerate(options)}
-		print(IDs)
-		choice = input("select ID")
-		ID = IDs[choice]
-		ws.send(b"download "+str.encode(file))
-	if b"Directory" in msg:
-		directory = (((msg.decode('utf-8')).split('Directory'))[1].split('\''))[1]
-		download = urlib.request.urlretrieve(file+ID+directory)
-		downloadfile = open(file, 'wb')
-		meta = download.info() 
-		size = int(meta.getheaders("Content-Length")[0])
-		print("Downloading: %s Bytes: %s" % (file, size))
-		size_dl = 0
-		block_sz = 8192 
-		while True:
-			buffer = download.read(block_sz)
-			if not buffer:
-				break 
-			size_dl+= len(buffer)
-			downloadfile.write(buffer)
-			status = r"%10d  [%3.2f%%]" % (size_dl, size_dl * 100. / size)
-			status = status + chr(8)*(len(status)+1)
-			print(status)
-		downloadfile.close()
 
