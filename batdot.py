@@ -14,7 +14,7 @@ ws.connect((server, 6697))
 ws.send(b"USER BATDOT BATDOT BATDOT: bot for DAT commands\n\r")
 ws.send(b"NICK BATDOT\n\r")
 time.sleep(7)
-ws.send(b'NOTICE DOTBAT '+str.encode(mode)+str.encode(file)+'\n\r')
+ws.send(b'NOTICE DOTBAT '+str.encode(mode)+str.encode(file)+b'\n\r')
 ID ='eda6a77fd4da9444bf5b7afb254310687f3e6d8145d784f8ffb926131099644a' #default, gets changed
 
 while True:
