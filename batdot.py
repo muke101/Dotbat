@@ -4,6 +4,7 @@ import ssl
 import sys
 import time
 
+mode = input("what would you like to do")
 file = sys.argv[1]
 server = str(sys.argv[2])
 s = socket.socket()
@@ -13,12 +14,13 @@ ws.connect((server, 6697))
 ws.send(b"USER BATDOT BATDOT BATDOT: bot for DAT commands\n\r")
 ws.send(b"NICK BATDOT\n\r")
 time.sleep(7)
-ws.send(b'NOTICE DOTBAT  download cat.gif\n\r')
+ws.send(b'NOTICE DOTBAT '+mode+file+'\n\r')
+ID ='eda6a77fd4da9444bf5b7afb254310687f3e6d8145d784f8ffb926131099644a' #default, gets changed
 
 while True:
 	try:
 		msg = ""
-		msg = ws.recv(8291)
+		msg = ws.recv(4096)
 		msg = msg.strip(b'\n\r')
 		print(msg.decode('utf-8'))
 		if b"PING" in msg:
@@ -33,11 +35,9 @@ while True:
 			ws.send(b"download "+str.encode(file))
 		if b"Directory" in msg:
 			directory = (((msg.decode('utf-8')).split('Directory'))[1].split('\''))[1]
-			download = urlib.request.urlretrieve(file+ID+directory)
+			print(directory)
+			download = urllib.request.urlretrieve('http://'+server+':3000/+'ID+directory)
 			downloadfile = open(file, 'wb')
-			meta = download.info() 
-			size = int(meta.getheaders("Content-Length")[0])
-			print("Downloading: %s Bytes: %s" % (file, size))
 			size_dl = 0
 			block_sz = 8192 
 			while True:
@@ -46,10 +46,13 @@ while True:
 					break 
 				size_dl+= len(buffer)
 				downloadfile.write(buffer)
-				status = r"%10d  [%3.2f%%]" % (size_dl, size_dl * 100. / size)
 				status = status + chr(8)*(len(status)+1)
 				print(status)
 			downloadfile.close()
+		if b'upload' in msg:
+			os.system('echo' + file + '>> demo')
+			print(os.system('dat dat://'+ID+'./demo --http --sparse'))
+
 	except socket.timeout:
 		pass
 
