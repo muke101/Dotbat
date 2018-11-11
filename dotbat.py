@@ -31,8 +31,11 @@ ws.send(b"NICK DOTBAT\n\r")
 ws.send(b"JOIN #bots\n\r")
 
 while True:
-	msg = ""
-	msg = ws.recv(4096)
+	msg = ''
+	try:
+		msg = ws.recv(8291)
+	except socket.timeout:
+		pass
 	msg = msg.strip(b'\n\r')
 	print(msg.decode('utf-8'))
 	if b"PING" in msg:

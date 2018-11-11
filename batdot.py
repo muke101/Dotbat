@@ -13,6 +13,7 @@ ws.send(b"USER BATDOT BATDOT BATDOT: bot for DAT commands\n\r")
 ws.send(b"NICK BATDOT\n\r")
 ws.send(b"JOIN #bots\n\r")
 ws.send(b'ID options')
+while  ws.recv
 msg = ws.recv(8291)
 options = (msg.decode('utf-8')).split(',')
 IDs = {c:i for c, i in enumerate(options)}
@@ -23,7 +24,10 @@ ws.send(b"download "+str.encode(file))
 
 while True:
 	msg = ""
-	msg = ws.recv(8291)
+	try:
+		msg = ws.recv(8291)
+	except socket.timeout:
+		pass
 	msg = msg.strip(b'\n\r')
 	print(msg.decode('utf-8'))
 	if b"PING" in msg:
