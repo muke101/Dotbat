@@ -15,7 +15,9 @@ def get_dat_url(dat_name):
     id = contract.functions.getDatURL(dat_name).call()
     return id
 
+
 print(get_dat_url("make me rich"))
+
 
 
 s = socket.socket()
@@ -34,13 +36,16 @@ while True:
 	print(msg.decode('utf-8'))
 	if b"PING" in msg:
 		ws.send(b"PONG\n\r")
+
 	if b'ID' in msg:
 		pass
+
+
+	if b'ID options' in msg:
+		
 
 	if b'download' in msg:
 		file = (((msg.decode('utf-8')).split("download"))[1].split('\''))[1]
 		directory = ''.join([i for i in str(os.system('find . -name' + '\'' + file + '\'')).split('0')[0]][2:])
 		ws.send(b'Directory \''+str.encode(directory)+b'\'')
-
-
 
