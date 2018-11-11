@@ -4,17 +4,17 @@ import "./Ownable.sol";
 
 contract DatNameService is Ownable {
     
-    mapping(string => string) private datId;
+    mapping (string => string) private datURLs;
     
-    function addDatName(string _name, string _datId) public onlyOwner {
-        datId[_name] = _datId;
+    function addDat(string _datName, string _URL) public onlyOwner {
+        datURLs[_datName] = _URL;
     }
     
-    function removeDatName(string _name) public onlyOwner {
-        datId[_name] = "";
+    function removeDat(string _datName) public onlyOwner {
+        datURLs[_datName] = "";
     }
     
-    function getDatId(string _name) public view returns(string) {
-        return datId[_name];
+    function getDatURL(string _datName) public view returns(string URL) {
+        URL = datURLs[_datName];
     }
 }
