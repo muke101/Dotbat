@@ -27,6 +27,7 @@ while True:
 		ws.send(b"PONG\n\r")
 	if b"sending IDs" in msg:
 		options = (msg.decode('utf-8')).split(',')
+		print("hello")
 		IDs = {c:i for c, i in enumerate(options)}
 		print(IDs)
 		choice = input("select ID")
