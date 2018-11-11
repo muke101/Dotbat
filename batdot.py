@@ -36,7 +36,7 @@ while True:
 		if b"Directory" in msg:
 			directory = (((msg.decode('utf-8')).split('Directory'))[1].split('\''))[1]
 			print(directory)
-			download = urllib.request.urlretrieve('http://'+server+':3000/+'ID+directory)
+			download = urllib.request.urlretrieve('http://'+server+':3000/'+ID+directory)
 			downloadfile = open(file, 'wb')
 			size_dl = 0
 			block_sz = 8192 
