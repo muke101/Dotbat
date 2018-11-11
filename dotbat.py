@@ -34,21 +34,21 @@ while True:
 	msg = ''
 	try:
 		msg = ws.recv(8291)
-	msg = msg.strip(b'\n\r')
-	print(msg.decode('utf-8'))
-	if b"PING" in msg:
-		ws.send(b"PONG\n\r")
+		msg = msg.strip(b'\n\r')
+		print(msg.decode('utf-8'))
+		if b"PING" in msg:
+			ws.send(b"PONG\n\r")
 
-	if b'ID options' in msg:
-		with open('names.csv', 'r') as IDs:
-			reader = csv.reader(IDs, delimiter=',')
-			for row in reader:
-				ws.send(str.encode(row)+b',')
+		if b'ID options' in msg:
+			with open('names.csv', 'r') as IDs:
+				reader = csv.reader(IDs, delimiter=',')
+				for row in reader:
+					ws.send(str.encode(row)+b',')
 
-	if b'download' in msg:
-		file = (((msg.decode('utf-8')).split("download"))[1].split('\''))[1]
-		directory = ''.join([i for i in str(os.system('find . -name' + '\'' + file + '\'')).split('0')[0]][2:])
-		ws.send(b'Directory \''+str.encode(directory)+b'\'')
+		if b'download' in msg:
+			file = (((msg.decode('utf-8')).split("download"))[1].split('\''))[1]
+			directory = ''.join([i for i in str(os.system('find . -name' + '\'' + file + '\'')).split('0')[0]][2:])
+			ws.send(b'Directory \''+str.encode(directory)+b'\'')
 	except socket.timeout:
 		pass
 
