@@ -13,15 +13,7 @@ ws.connect((server, 6697))
 ws.send(b"USER BATDOT BATDOT BATDOT: bot for DAT commands\n\r")
 ws.send(b"NICK BATDOT\n\r")
 ws.send(b"JOIN #bots\n\r")
-ws.send(b'ID options')
-time.sleep(5)
-msg = ws.recv(8291)
-options = (msg.decode('utf-8')).split(',')
-IDs = {c:i for c, i in enumerate(options)}
-print(IDs)
-choice = input("select ID")
-ID = IDs[choice]
-ws.send(b"download "+str.encode(file))
+ws.send(b'ID options\n\r')
 
 while True:
 	msg = ""
@@ -33,6 +25,13 @@ while True:
 	print(msg.decode('utf-8'))
 	if b"PING" in msg:
 		ws.send(b"PONG\n\r")
+	if b"sending IDs" in msg:
+		options = (msg.decode('utf-8')).split(',')
+		IDs = {c:i for c, i in enumerate(options)}
+		print(IDs)
+		choice = input("select ID")
+		ID = IDs[choice]
+		ws.send(b"download "+str.encode(file))
 	if b"Directory" in msg:
 		directory = (((msg.decode('utf-8')).split('Directory'))[1].split('\''))[1]
 		download = urlib.request.urlretrieve(file+ID+directory)

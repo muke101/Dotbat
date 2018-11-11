@@ -40,6 +40,7 @@ while True:
 			ws.send(b"PONG\n\r")
 
 		if b'ID options' in msg:
+			ws.send(b'sending IDs')
 			with open('names.csv', 'r') as IDs:
 				reader = csv.reader(IDs, delimiter=',')
 				for row in reader:
